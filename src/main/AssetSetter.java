@@ -1,6 +1,7 @@
 package main;
 
 import entity.NPC_OldMan;
+import monster.MON_GreenSlime;
 import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
@@ -17,17 +18,17 @@ public class AssetSetter {
 	
 	public void setObject() {
 		gamePanel.objects[0] = new OBJ_Key(gamePanel);
-		gamePanel.objects[0].worldX = 23 * gamePanel.tileSize;
-		gamePanel.objects[0].worldY = 7 * gamePanel.tileSize;
+		gamePanel.objects[0].worldX = gamePanel.tileSize * 21;
+		gamePanel.objects[0].worldY = gamePanel.tileSize * 22;
 		
 		gamePanel.objects[1] = new OBJ_Key(gamePanel);
-		gamePanel.objects[1].worldX = 23 * gamePanel.tileSize;
-		gamePanel.objects[1].worldY = 40 * gamePanel.tileSize;
+		gamePanel.objects[1].worldX = gamePanel.tileSize * 23;
+		gamePanel.objects[1].worldY = gamePanel.tileSize * 25;
 		
 		gamePanel.objects[2] = new OBJ_Key(gamePanel);
 		gamePanel.objects[2].worldX = 37 * gamePanel.tileSize;
 		gamePanel.objects[2].worldY = 7 * gamePanel.tileSize;
-		
+		/*
 		gamePanel.objects[3] = new OBJ_Door(gamePanel);
 		gamePanel.objects[3].worldX = 10 * gamePanel.tileSize;
 		gamePanel.objects[3].worldY = 11 * gamePanel.tileSize;
@@ -47,13 +48,37 @@ public class AssetSetter {
 		gamePanel.objects[7] = new OBJ_Boots(gamePanel);
 		gamePanel.objects[7].worldX = 37 * gamePanel.tileSize;
 		gamePanel.objects[7].worldY = 42 * gamePanel.tileSize;
-		
+		*/
 	}
 	
 	public void setNPC() {
 		gamePanel.npc[0] = new NPC_OldMan(gamePanel);
 		gamePanel.npc[0].worldX = gamePanel.tileSize * 21;
 		gamePanel.npc[0].worldY = gamePanel.tileSize * 21;
+		/*
+		gamePanel.npc[1] = new NPC_OldMan(gamePanel);
+		gamePanel.npc[1].worldX = gamePanel.tileSize * 11;
+		gamePanel.npc[1].worldY = gamePanel.tileSize * 21;		
+*/
+	}
+	
+	public void setMonster() {
+		
+		gamePanel.monsters[0] = new MON_GreenSlime(gamePanel);
+		gamePanel.monsters[0].worldX = gamePanel.tileSize * 23;
+		gamePanel.monsters[0].worldY = gamePanel.tileSize * 36;
+		
+		gamePanel.monsters[1] = new MON_GreenSlime(gamePanel);
+		gamePanel.monsters[1].worldX = gamePanel.tileSize * 23;
+		gamePanel.monsters[1].worldY = gamePanel.tileSize * 37;
+		/*
+		gamePanel.monsters[0] = new MON_GreenSlime(gamePanel);
+		gamePanel.monsters[0].worldX = gamePanel.tileSize * 11;
+		gamePanel.monsters[0].worldY = gamePanel.tileSize * 10;
+		
+		gamePanel.monsters[1] = new MON_GreenSlime(gamePanel);
+		gamePanel.monsters[1].worldX = gamePanel.tileSize * 11;
+		gamePanel.monsters[1].worldY = gamePanel.tileSize * 11;*/
 	}
 	
 }

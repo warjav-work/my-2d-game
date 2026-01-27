@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -47,8 +49,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// ENTITY AND OBJECT
 	public Player player = new Player(this, keyHandler);
-	public SuperObject objects[] = new SuperObject[25];
+	public Entity objects[] = new Entity[25];
 	public Entity npc[] = new Entity[10];
+	public Entity monsters[] = new Entity[20];
+	ArrayList<Entity> entityList = new ArrayList<>();
 
 	// GAME STATE
 	public int gameState;
@@ -71,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setUpGame() {
 		assetSetter.setObject();
 		assetSetter.setNPC();
+		assetSetter.setMonster();
 		playMusic(0);
 		stopMucis();
 		gameState = titleState;
@@ -143,19 +148,25 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void update() {
 		if (gameState == playState) {
-			//PLAYER
+			// PLAYER
 			player.update();
-		}
-		
-		for (Entity npcInstancet : npc) {
-			// NPC
-			if (npcInstancet != null) {
-				npcInstancet.update();
+
+			for (Entity npcInstancet : npc) {
+				// NPC
+				if (npcInstancet != null) {
+					npcInstancet.update();
+				}
+			}
+			for (Entity monsterInstancet : monsters) {
+				// MONSTERS
+				if (monsterInstancet != null) {
+					monsterInstancet.update();
+				}
 			}
 		}
-		
+
 		if (gameState == pauseState) {
-			//Nothing
+			// Nothing
 		}
 
 	}
@@ -169,41 +180,63 @@ public class GamePanel extends JPanel implements Runnable {
 		if (keyHandler.checkDrawTime) {
 			drawStart = System.nanoTime();
 		}
-		
+
 		// TITLE
-		if(gameState == titleState) {
-			
+		if (gameState == titleState) {
+
 		}
-		
+
 		// OTHER
 		else {
-			
+
 			// TILE
 			tileManager.draw(g2);
 
-			// OBJECT
-			for (SuperObject object : objects) {
-				if (object != null) {
-					object.draw(g2, this);
-				}
-			}
-			
+			// ADD ENTITIES TO LIST
+			// ADD PLAYER
+			entityList.add(player);
+
+			// ADD NPC'S
 			for (Entity npcInstancet : npc) {
 				if (npcInstancet != null) {
-					npcInstancet.draw(g2);
+					entityList.add(npcInstancet);
+					// npcInstancet.draw(g2);
 				}
 			}
-			
-			
-			// PLAYER
-			player.draw(g2);
 
-			
+			// ADD OBJECTS
+			for (Entity object : objects) {
+				if (object != null) {
+					entityList.add(object);
+
+				}
+			}
+
+			// ADD MONSTERS
+			for (Entity object : monsters) {
+				if (object != null) {
+					entityList.add(object);
+				}
+			}
+
+			// SORT
+			Collections.sort(entityList, new Comparator<Entity>() {
+				@Override
+				public int compare(Entity e1, Entity e2) {
+					return Integer.compare(e1.worldY, e2.worldY);
+				}
+			});
+
+			// DRAW ENTITIES
+			for (Entity entity : entityList) {
+				entity.draw(g2);
+			}
+
+			// EMPTY ENTITIES
+			entityList.clear();
+
 		}
-			
 		ui.draw(g2);
-
-		
 
 		// DEBUG
 		if (keyHandler.checkDrawTime) {
