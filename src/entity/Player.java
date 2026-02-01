@@ -263,6 +263,7 @@ public class Player extends Entity {
 				gamePanel.gameState = gamePanel.dialogueState;
 				gamePanel.npc[i].speak();
 			} else {
+				gamePanel.playSoundEfect(7);
 				attacking = true;
 			}
 			// gamePanel.keyHandler.enterPressed = false;
@@ -274,6 +275,7 @@ public class Player extends Entity {
 		if (i != 999) {
 
 			if (!invincible) {
+				gamePanel.playSoundEfect(6);
 				life -= 1;
 				invincible = true;
 			}
@@ -283,11 +285,14 @@ public class Player extends Entity {
 	public void damageMonster(int i) {
 		if (i != 999) {
 			if(!gamePanel.monsters[i].invincible) {
+				
+				gamePanel.playSoundEfect(5);
 				gamePanel.monsters[i].life -=1;
 				gamePanel.monsters[i].invincible = true;
+				gamePanel.monsters[i].damageReaction();
 				
-				if(gamePanel.monsters[i].life <=0) {
-					gamePanel.monsters[i] = null;
+				if(gamePanel.monsters[i].life <= 0) {
+					gamePanel.monsters[i].dying = true;
 				}
 			}		
 		}

@@ -157,10 +157,15 @@ public class GamePanel extends JPanel implements Runnable {
 					npcInstancet.update();
 				}
 			}
-			for (Entity monsterInstancet : monsters) {
+			for (int i = 0; i < monsters.length; i++) {
 				// MONSTERS
-				if (monsterInstancet != null) {
-					monsterInstancet.update();
+				if (monsters[i] != null) {
+					if (monsters[i].alive && !monsters[i].dying) {
+						monsters[i].update();
+					}
+					if (!monsters[i].alive) {
+						monsters[i] = null;
+					}
 				}
 			}
 		}
